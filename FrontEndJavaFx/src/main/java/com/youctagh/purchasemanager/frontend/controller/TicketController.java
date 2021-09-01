@@ -10,6 +10,7 @@ import com.youctagh.purchasemanager.frontend.request.TicketRequest;
 import com.youctagh.purchasemanager.frontend.util.TableViewUtils;
 import com.youctagh.purchasemanager.frontend.view.ticket.TicketView;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ListCell;
@@ -45,12 +46,12 @@ public class TicketController {
     }
 
     private void initView() {
+        initItemTV();
         initButtons();
         initDataTV();
         initChangeTV();
         initCB();
         initSpinner();
-        initItemTV();
     }
 
     private void initSpinner() {
@@ -71,6 +72,8 @@ public class TicketController {
             ticketView.getDateDP().setValue(null);
             ticketView.getStoreCB().getSelectionModel().clearSelection();
             ticketView.getItemTV().getItems().clear();
+            ticketView.getItemCommentTA().setText("");
+            ticketView.getItemPriceSpinner().getValueFactory().setValue(0D);
         } else {
             ticketView.getDateDP().setValue(LocalDate.ofInstant(ticket.getDate().toInstant(), ZoneId.systemDefault()));
             ticketView.getStoreCB().getSelectionModel().select(ticket.getStore());
@@ -166,6 +169,28 @@ public class TicketController {
                         30, 3, "comment")
         );
 
+        ticketView.getItemTV().getItems().addListener((ListChangeListener<Item>) change -> {
+            final ObservableList<? extends Item> list = change.getList();
+            updateTotalPrice(list);
+        });
+        ticketView.getItemTV().itemsProperty().addListener((observableValue, oldItem, newItem) -> {
+            updateTotalPrice(newItem);
+            newItem.addListener((ListChangeListener<Item>) change -> {
+                final ObservableList<? extends Item> list = change.getList();
+                updateTotalPrice(list);
+            });
+
+        });
+
+    }
+
+    private void updateTotalPrice(ObservableList<? extends Item> list) {
+        if (list.isEmpty()) {
+            ticketView.getTotalLabel().setText("Total: -");
+        } else {
+            Double sum = list.stream().map(Item::getPrice).reduce(0D, Double::sum);
+            ticketView.getTotalLabel().setText("Total: " + sum);
+        }
     }
 
     private void initButtons() {

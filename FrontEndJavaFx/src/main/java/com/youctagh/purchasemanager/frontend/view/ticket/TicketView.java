@@ -25,6 +25,8 @@ public class TicketView extends VBox {
     private ComboBox<Product> productCB;
 
     @FXML
+    private Label totalLabel;
+    @FXML
     private DatePicker dateDP;
 
     @FXML
