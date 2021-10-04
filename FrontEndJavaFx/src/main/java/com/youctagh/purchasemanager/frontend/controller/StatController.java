@@ -118,12 +118,12 @@ public class StatController {
         final TreeMap<String, Double> data = getBarChartData(filter);
 
         statView.getBarChart().setTitle("Stat");
-        statView.getBarChart().getXAxis().setLabel("X");
-        statView.getBarChart().getYAxis().setLabel("Y");
+        statView.getBarChart().getXAxis().setLabel("Euros");
+        statView.getBarChart().getYAxis().setLabel("Months");
 
         statView.getBarChart().getData().clear();
         XYChart.Series serie1 = new XYChart.Series();
-        serie1.setName("Serie_1");
+        serie1.setName(filter.name());
 
         statView.getBarChart().getData().add(serie1);
 
@@ -144,7 +144,7 @@ public class StatController {
                     LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                     int year = localDate.getYear();
                     int month = localDate.getMonthValue();
-                    String key = year + " " + month;
+                    String key = year + " / " + String.format("%02d",month);
                     Double totalPrice = data.getOrDefault(key, 0D);
                     totalPrice += ticket.getItems().stream().map(Item::getPrice).reduce(0D, Double::sum);
                     data.put(key, totalPrice);
