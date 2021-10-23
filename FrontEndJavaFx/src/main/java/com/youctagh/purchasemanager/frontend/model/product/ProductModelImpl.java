@@ -1,6 +1,5 @@
 package com.youctagh.purchasemanager.frontend.model.product;
 
-import com.youctagh.purchasemanager.frontend.domain.Category;
 import com.youctagh.purchasemanager.frontend.domain.Product;
 import com.youctagh.purchasemanager.frontend.request.ProductRequest;
 import com.youctagh.purchasemanager.frontend.service.category.CategoryService;
@@ -9,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author YoucTagh
@@ -23,7 +23,11 @@ public class ProductModelImpl implements ProductModel {
 
 
     public ObservableList<Product> getProductList() {
-        return FXCollections.observableArrayList(productService.findAll());
+        return FXCollections.observableArrayList(
+                productService.findAll()
+                        .stream()
+                        .sorted((o1, o2) -> o1.getName().compareTo(o2.getName()))
+                        .collect(Collectors.toList()));
     }
 
 

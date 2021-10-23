@@ -15,7 +15,9 @@ import lombok.Getter;
 @Getter
 public class StatView {
     @FXML
-    public BarChart barChart;
+    private BarChart barChart;
+    @FXML
+    private ComboBox<String> pieChartFilterCB;
     @FXML
     private ComboBox<StatController.BarChartFilter> barChartFilterByCB;
     @FXML

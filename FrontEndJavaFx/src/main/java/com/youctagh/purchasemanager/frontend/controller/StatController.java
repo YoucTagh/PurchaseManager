@@ -17,6 +17,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -50,6 +51,28 @@ public class StatController {
                 , PieChartFilter.category
                 , PieChartFilter.product);
         statView.getPieChartFilterByCB().getSelectionModel().select(0);
+
+
+        initFilterYearMonthCB();
+    }
+
+    private void initFilterYearMonthCB() {
+
+        statView.getPieChartFilterCB().getItems().addAll(
+                generalController.getTicketController().getTicketView().getDataTV().getItems()
+                        .stream()
+                        .map(ticket -> {
+                            Date date = ticket.getDate();
+                            LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                            int year = localDate.getYear();
+                            int month = localDate.getMonthValue();
+                            return year + "/" + String.format("%02d", month);
+                        })
+                        .collect(Collectors.toSet())
+                        .stream().sorted()
+                        .collect(Collectors.toList())
+
+        );
     }
 
     private void initBarCB() {
@@ -70,7 +93,15 @@ public class StatController {
     }
 
     private void createPieChart(PieChartFilter filter) {
-        final HashMap<String, Double> data = getPieChartData(filter);
+        final String selectedItem = statView.getPieChartFilterCB().getSelectionModel().getSelectedItem();
+        String[] date;
+        final HashMap<String, Double> data;
+        if (selectedItem != null) {
+            date = selectedItem.split("/");
+            data = getPieChartData(filter, Integer.parseInt(date[0]), Integer.parseInt(date[1]));
+        } else {
+            data = getPieChartData(filter, 0, 0);
+        }
 
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
         data.forEach((s, d) -> {
@@ -81,9 +112,26 @@ public class StatController {
 
     }
 
-    private HashMap<String, Double> getPieChartData(PieChartFilter filter) {
+    private HashMap<String, Double> getPieChartData(PieChartFilter filter, int year, int month) {
         HashMap<String, Double> data = new HashMap<>();
-        final ObservableList<Ticket> items = generalController.getTicketController().getTicketView().getDataTV().getItems();
+        final ObservableList<Ticket> items;
+        if (year != 0)
+            items = FXCollections.observableArrayList(
+                    generalController
+                            .getTicketController().getTicketView().getDataTV().getItems()
+                            .stream()
+                            .filter(ticket -> {
+                                Date date = ticket.getDate();
+                                LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                                int ticketYear = localDate.getYear();
+                                int ticketMonth = localDate.getMonthValue();
+                                return ticketMonth == month && ticketYear == year;
+                            })
+                            .collect(Collectors.toList()));
+        else {
+            items = FXCollections.observableArrayList(
+                    generalController.getTicketController().getTicketView().getDataTV().getItems());
+        }
         switch (filter) {
             case store:
                 items.forEach(ticket -> {
@@ -144,7 +192,7 @@ public class StatController {
                     LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                     int year = localDate.getYear();
                     int month = localDate.getMonthValue();
-                    String key = year + " / " + String.format("%02d",month);
+                    String key = year + " / " + String.format("%02d", month);
                     Double totalPrice = data.getOrDefault(key, 0D);
                     totalPrice += ticket.getItems().stream().map(Item::getPrice).reduce(0D, Double::sum);
                     data.put(key, totalPrice);
