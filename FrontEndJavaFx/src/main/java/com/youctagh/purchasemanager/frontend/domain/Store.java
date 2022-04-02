@@ -13,4 +13,9 @@ public class Store extends BaseEntity {
 
     private String name;
     private String address;
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

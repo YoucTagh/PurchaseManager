@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import org.controlsfx.control.SearchableComboBox ?>
 
 <fx:root prefHeight="500.0" prefWidth="800.0" type="VBox" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <children>
@@ -30,9 +31,9 @@
                         <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <ComboBox fx:id="storeCB" prefWidth="150.0" promptText="Select Store" />
+                        <SearchableComboBox fx:id="storeCB" prefWidth="150.0" promptText="Select Store" />
                         <DatePicker fx:id="dateDP" promptText="Date of Purchase" GridPane.columnIndex="1" />
-                        <ComboBox fx:id="productCB" prefWidth="150.0" promptText="Select Product" GridPane.rowIndex="1" />
+                        <SearchableComboBox fx:id="productCB" prefWidth="150.0" promptText="Select Product" GridPane.rowIndex="1" />
                         <Button fx:id="addItemButton" mnemonicParsing="false" text="Add Item" GridPane.rowIndex="3" />
                         <Button fx:id="deleteItemButton" mnemonicParsing="false" text="Remove Item" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Spinner fx:id="itemPriceSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />

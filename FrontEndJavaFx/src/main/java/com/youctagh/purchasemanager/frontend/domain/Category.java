@@ -13,4 +13,9 @@ import lombok.experimental.Accessors;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Category extends BaseEntity {
     private String name;
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

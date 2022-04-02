@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
+import org.controlsfx.control.SearchableComboBox;
 
 import java.io.IOException;
 
@@ -23,7 +24,7 @@ public class ProductView extends VBox {
     private TextField nameTF;
 
     @FXML
-    private ComboBox<Category> categoryCB;
+    private SearchableComboBox<Category> categoryCB;
 
     @FXML
     private Button updateButton;

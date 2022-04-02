@@ -24,4 +24,9 @@ public class Product extends BaseEntity {
         }
         return category.getName();
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

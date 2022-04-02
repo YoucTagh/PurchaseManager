@@ -11,6 +11,7 @@ module PurchaseManager {
     requires google.api.translate.java;
     requires java.sql;
     requires jackson.dataformat.csv;
+    requires org.controlsfx.controls;
 
     exports com.youctagh.purchasemanager.frontend.view.general;
     exports com.youctagh.purchasemanager.frontend.view.statistics;

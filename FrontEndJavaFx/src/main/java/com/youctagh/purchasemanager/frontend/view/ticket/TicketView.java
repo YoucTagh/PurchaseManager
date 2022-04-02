@@ -12,6 +12,9 @@ import lombok.Getter;
 
 import java.io.IOException;
 
+import org.controlsfx.control.SearchableComboBox;
+
+
 /**
  * @author YoucTagh
  */
@@ -19,10 +22,10 @@ import java.io.IOException;
 public class TicketView extends VBox {
 
     @FXML
-    private ComboBox<Store> storeCB;
+    private SearchableComboBox<Store> storeCB;
 
     @FXML
-    private ComboBox<Product> productCB;
+    private SearchableComboBox<Product> productCB;
 
     @FXML
     private Label totalLabel;
@@ -66,6 +69,5 @@ public class TicketView extends VBox {
             e.printStackTrace();
         }
     }
-
 
 }
