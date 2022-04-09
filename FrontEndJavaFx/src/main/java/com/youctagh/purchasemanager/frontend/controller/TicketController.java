@@ -218,6 +218,10 @@ public class TicketController {
     private void deleteNewModel() {
 
         final Ticket ticket = ticketView.getDataTV().getSelectionModel().getSelectedItem();
+        if (ticket == null) {
+            JOptionPane.showMessageDialog(null, "Please select a Ticket !!");
+            return;
+        }
         final ObservableList<Ticket> items = ticketView.getDataTV().getItems();
         if (ticketModel.deleteTicket(items, ticket)) {
             JOptionPane.showMessageDialog(null, "Successful !!");
@@ -227,13 +231,22 @@ public class TicketController {
     }
 
     private void updateNewModel() {
-        final Date date = java.sql.Date.valueOf(ticketView.getDateDP().getValue());
+
         final Store store = ticketView.getStoreCB().getSelectionModel().getSelectedItem();
-        final String comment = ticketView.getItemCommentTA().getText();
         if (store == null) {
-            JOptionPane.showMessageDialog(null, "Name Empty !!");
+            JOptionPane.showMessageDialog(null, "Store Empty !!");
             return;
         }
+
+        final LocalDate localDate = ticketView.getDateDP().getValue();
+        final Date date;
+        if (localDate == null) {
+            JOptionPane.showMessageDialog(null, "Date Empty !!");
+            return;
+        } else {
+            date = java.sql.Date.valueOf(localDate);
+        }
+
         final Ticket oldItem = ticketView.getDataTV().getSelectionModel().getSelectedItem();
 
         TicketRequest newItem = (TicketRequest) new TicketRequest()
@@ -255,12 +268,21 @@ public class TicketController {
     }
 
     private void addNewModel() {
-        final Date date = java.sql.Date.valueOf(ticketView.getDateDP().getValue());
         final Store store = ticketView.getStoreCB().getSelectionModel().getSelectedItem();
         if (store == null) {
-            JOptionPane.showMessageDialog(null, "Date Empty !!");
+            JOptionPane.showMessageDialog(null, "Store Empty !!");
             return;
         }
+
+        final LocalDate localDate = ticketView.getDateDP().getValue();
+        final Date date;
+        if (localDate == null) {
+            JOptionPane.showMessageDialog(null, "Date Empty !!");
+            return;
+        } else {
+            date = java.sql.Date.valueOf(localDate);
+        }
+
         final TicketRequest request = new TicketRequest()
                 .setDate(date)
                 .setStore_id(store.getId())
@@ -294,9 +316,17 @@ public class TicketController {
 
     private void deleteItem() {
         final Item selectedItem = ticketView.getItemTV().getSelectionModel().getSelectedItem();
-        if (selectedItem != null)
-            ticketView.getItemTV().getItems().remove(selectedItem);
-        else
+        if (selectedItem != null) {
+            ticketView.getItemTV().setItems(
+                    FXCollections.observableList(
+                            ticketView.getItemTV().getItems().stream().filter(item ->
+                                    !item.getProduct().getId().equals(selectedItem.getProduct().getId())
+                                            || !item.getPrice().equals(selectedItem.getPrice())
+                                            || !item.getComment().equals(selectedItem.getComment()))
+                                    .collect(Collectors.toList()))
+            );
+
+        } else
             JOptionPane.showMessageDialog(null, "Select Item !!");
 
     }
