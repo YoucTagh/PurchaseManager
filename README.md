@@ -1,11 +1,11 @@
 # PurchaseManager
 
-This is a project to manage tickets of bought product from different stores 
+This is a project to manage tickets of bought products from different stores.
 
 It contains two modules:
 
-## BackEnd
-Spring
+## BackEnd Module
+This module was developped with Spring
 
 ## FrontEnd
-JavaFx, java 11,
+This module was developped with JavaFx for GUI and Java 11
