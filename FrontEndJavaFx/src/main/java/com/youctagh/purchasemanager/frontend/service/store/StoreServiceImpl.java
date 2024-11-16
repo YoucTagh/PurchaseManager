@@ -2,7 +2,6 @@ package com.youctagh.purchasemanager.frontend.service.store;
 
 import com.youctagh.purchasemanager.frontend.domain.Store;
 import com.youctagh.purchasemanager.frontend.service.base.BaseServiceImpl;
-import com.youctagh.purchasemanager.frontend.service.store.StoreService;
 
 import java.util.HashSet;
 import java.util.Optional;

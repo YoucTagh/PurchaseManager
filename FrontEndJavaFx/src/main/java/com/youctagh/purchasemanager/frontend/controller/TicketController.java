@@ -222,6 +222,7 @@ public class TicketController {
             JOptionPane.showMessageDialog(null, "Please select a Ticket !!");
             return;
         }
+
         final ObservableList<Ticket> items = ticketView.getDataTV().getItems();
         if (ticketModel.deleteTicket(items, ticket)) {
             JOptionPane.showMessageDialog(null, "Successful !!");
@@ -246,6 +247,11 @@ public class TicketController {
         } else {
             date = java.sql.Date.valueOf(localDate);
         }
+
+        if (ticketView.getItemTV().getItems().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ticket cannot be without Items !!");
+            return;
+        } 
 
         final Ticket oldItem = ticketView.getDataTV().getSelectionModel().getSelectedItem();
 
@@ -283,6 +289,12 @@ public class TicketController {
             date = java.sql.Date.valueOf(localDate);
         }
 
+        if (ticketView.getItemTV().getItems().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ticket cannot be without Items !!");
+            return;
+        } 
+
+
         final TicketRequest request = new TicketRequest()
                 .setDate(date)
                 .setStore_id(store.getId())
@@ -304,7 +316,11 @@ public class TicketController {
         final Product product = ticketView.getProductCB().getSelectionModel().getSelectedItem();
         final String comment = ticketView.getItemCommentTA().getText();
         if (price == 0) {
-            JOptionPane.showMessageDialog(null, "Name Empty !!");
+            JOptionPane.showMessageDialog(null, "Price Empty !!");
+            return;
+        }
+        if (product == null) {
+            JOptionPane.showMessageDialog(null, "Product Empty !!");
             return;
         }
         final Item item = new Item()

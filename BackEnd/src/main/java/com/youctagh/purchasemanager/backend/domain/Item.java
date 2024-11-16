@@ -1,12 +1,14 @@
 package com.youctagh.purchasemanager.backend.domain;
 
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 
 @Getter
 @Setter
@@ -18,6 +20,7 @@ public class Item extends BaseEntity {
     private Product product;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Ticket ticket;
 
     private Double price;

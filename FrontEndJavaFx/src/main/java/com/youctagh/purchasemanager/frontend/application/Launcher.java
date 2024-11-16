@@ -19,6 +19,8 @@ public class Launcher extends Application {
         final Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
+        primaryStage.setWidth(800);
+        primaryStage.setHeight(600);
 
         GeneralController controller = new GeneralController()
                 .setGeneralModel(new GeneralModel())

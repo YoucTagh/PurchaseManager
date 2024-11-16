@@ -11,6 +11,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
+
 public class Item extends BaseEntity {
     private Product product;
     private Ticket ticket;
@@ -22,5 +23,10 @@ public class Item extends BaseEntity {
             return product.getName();
         else
             return "";
+    }
+
+    @Override
+    public String toString() {
+        return product.getName() + ":"+price+":"+comment;
     }
 }

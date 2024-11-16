@@ -47,11 +47,10 @@ public class TicketController {
                 .setPayload(addTicket(ticketRequest));
     }
 
-    private Response addTicket(TicketRequest ticketRequest) {
+    private TicketDTO addTicket(TicketRequest ticketRequest) {
 
-        return Response.ok().setPayload(
-                ticketService
-                        .addTicket(TicketMapper.requestToTicket(ticketRequest)));
+        return ticketService
+                        .addTicket(TicketMapper.requestToTicket(ticketRequest)).get();
     }
 
     @DeleteMapping("/ticket")

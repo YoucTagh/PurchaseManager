@@ -12,9 +12,7 @@ import com.youctagh.purchasemanager.backend.repository.ItemRepository;
 import com.youctagh.purchasemanager.backend.repository.ProductRepository;
 import com.youctagh.purchasemanager.backend.repository.TicketRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.stream.Collectors;

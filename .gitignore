@@ -22,6 +22,9 @@ nbproject/
 docs/presentation/node_modules/
 /docs/_build
 
+# vscode
+.vscode/
+
 dependency-reduced-pom.xml
 .flattened-pom.xml
 Teste.java
@@ -30,23 +33,3 @@ Test.java
 *.jar
 *.~lock*
 ~$*
-/Control/target/
-/CustomNode/target/
-/Indexation/target/
-/LogIn/target/
-/MainScreen/target/
-/Model/target/
-/ReScan/target/
-/Research/target/
-/Scan/target/
-/Server/target/
-/ServerManager/target/
-/Documentation/target/
-/i18n/target/
-/Setting/target/
-/ToDo/target/
-/Task/target/
-/Workflow/target/
-listAlias.ser
-settings.sz
-scanPath.sz

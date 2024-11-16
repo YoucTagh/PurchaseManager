@@ -1,7 +1,5 @@
 package com.youctagh.purchasemanager.frontend.model.ticket;
 
-import com.youctagh.purchasemanager.frontend.domain.Product;
-import com.youctagh.purchasemanager.frontend.domain.Store;
 import com.youctagh.purchasemanager.frontend.domain.Ticket;
 import com.youctagh.purchasemanager.frontend.request.TicketRequest;
 import com.youctagh.purchasemanager.frontend.service.product.ProductService;

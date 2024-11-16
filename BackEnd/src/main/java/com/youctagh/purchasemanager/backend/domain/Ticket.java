@@ -1,10 +1,11 @@
 package com.youctagh.purchasemanager.backend.domain;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ import java.util.Set;
 @Setter
 @Accessors(chain = true)
 @Entity
+@ToString
 public class Ticket extends BaseEntity {
 
     @ManyToOne
@@ -20,6 +22,6 @@ public class Ticket extends BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "ticket")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "ticket", cascade = CascadeType.REMOVE,orphanRemoval = true)
     private Set<Item> items;
 }

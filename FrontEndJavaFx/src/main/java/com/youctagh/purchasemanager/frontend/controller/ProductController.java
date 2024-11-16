@@ -112,6 +112,9 @@ public class ProductController {
         if (name.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Name Empty !!");
             return;
+        }else if(category == null){
+            JOptionPane.showMessageDialog(null, "Select a Category !!");
+            return;
         }
         final Product oldItem = productView.getDataTV().getSelectionModel().getSelectedItem();
 
@@ -132,6 +135,9 @@ public class ProductController {
         final Category category = productView.getCategoryCB().getSelectionModel().getSelectedItem();
         if (name.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Name Empty !!");
+            return;
+        }else if(category == null){
+            JOptionPane.showMessageDialog(null, "Select a Category !!");
             return;
         }
         final ProductRequest request = new ProductRequest()

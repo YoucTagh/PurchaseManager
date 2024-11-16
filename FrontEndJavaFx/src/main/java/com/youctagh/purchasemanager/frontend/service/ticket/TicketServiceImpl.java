@@ -3,7 +3,6 @@ package com.youctagh.purchasemanager.frontend.service.ticket;
 import com.youctagh.purchasemanager.frontend.domain.Ticket;
 import com.youctagh.purchasemanager.frontend.request.TicketRequest;
 import com.youctagh.purchasemanager.frontend.service.base.BaseServiceImpl;
-import com.youctagh.purchasemanager.frontend.service.ticket.TicketService;
 
 import java.util.HashSet;
 import java.util.Optional;

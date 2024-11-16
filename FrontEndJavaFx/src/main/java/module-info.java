@@ -1,17 +1,17 @@
-module PurchaseManager {
+module FrontEndJavaFx {
     requires javafx.graphics;
-    requires javafx.controls;
     requires javafx.base;
     requires javafx.fxml;
-    requires javafx.swing;
+    requires javafx.controls;
+
+    requires org.controlsfx.controls;
     requires lombok;
     requires java.desktop;
     requires java.net.http;
     requires com.fasterxml.jackson.databind;
-    requires google.api.translate.java;
     requires java.sql;
-    requires jackson.dataformat.csv;
-    requires org.controlsfx.controls;
+    requires com.fasterxml.jackson.dataformat.csv;
+    requires com.fasterxml.jackson.core;
 
     exports com.youctagh.purchasemanager.frontend.view.general;
     exports com.youctagh.purchasemanager.frontend.view.statistics;
@@ -25,6 +25,10 @@ module PurchaseManager {
     exports com.youctagh.purchasemanager.frontend.domain.response;
 
     opens com.youctagh.purchasemanager.frontend.application;
+
+    opens com.youctagh.purchasemanager.frontend.domain;
+
+    opens com.youctagh.purchasemanager.frontend;
 
     opens com.youctagh.purchasemanager.frontend.view.statistics;
     opens com.youctagh.purchasemanager.frontend.view.general;

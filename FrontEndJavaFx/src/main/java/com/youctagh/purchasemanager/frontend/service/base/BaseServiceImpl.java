@@ -1,18 +1,14 @@
 package com.youctagh.purchasemanager.frontend.service.base;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
-
 import static java.net.URI.create;
 import static java.net.http.HttpResponse.BodyHandlers.ofString;
 
@@ -20,7 +16,7 @@ import static java.net.http.HttpResponse.BodyHandlers.ofString;
  * @author YoucTagh
  */
 public class BaseServiceImpl implements BaseService {
-    private final String BASE_URL = "http://localhost:8080//api/v1/";
+    private final String BASE_URL = "http://localhost:8080/api/v1";
 
     @Override
     public Optional findById(Long id, String relativeURL, Class clazz) {
@@ -35,10 +31,9 @@ public class BaseServiceImpl implements BaseService {
                 .thenAccept(s -> {
                     try {
                         ObjectMapper mapper = new ObjectMapper();
-                        JSONObject jsonObject = new JSONObject(s);
-                        JSONObject getSth = jsonObject.getJSONObject("payload");
-                        answer.set(mapper.readValue(getSth.toString(), clazz));
-                    } catch (JSONException | JsonProcessingException e) {
+                        JsonNode jsonNode = mapper.readTree(s);
+                        answer.set(mapper.readValue(jsonNode.get("payload").toPrettyString(), clazz));
+                    } catch (JsonProcessingException e) {
                         e.printStackTrace();
                     }
                 })
@@ -53,24 +48,20 @@ public class BaseServiceImpl implements BaseService {
                 .uri(create(BASE_URL + relativeURL))
                 .method("GET", (HttpRequest.BodyPublishers.noBody()))
                 .build();
-        HashSet<Object> answer = new HashSet<>();
+        AtomicReference<HashSet> answer = new AtomicReference();
         client.sendAsync(request, ofString())
                 .thenApply(HttpResponse::body)
                 .thenAccept(s -> {
                     try {
-                        JSONObject jsonObject = new JSONObject(s);
-                        JSONArray getSth = jsonObject.getJSONArray("payload");
                         ObjectMapper mapper = new ObjectMapper();
-                        for (int i = 0; i < getSth.length(); i++) {
-                            Object object = mapper.readValue(getSth.getString(i), clazz);
-                            answer.add(object);
-                        }
-                    } catch (JSONException | JsonProcessingException e) {
+                        JsonNode jsonNode = mapper.readTree(s);
+                        answer.set(mapper.readValue(jsonNode.get("payload").toPrettyString(), mapper.getTypeFactory().constructCollectionType(HashSet.class, clazz)));       
+                    } catch (JsonProcessingException e) {
                         e.printStackTrace();
                     }
                 })
                 .join();
-        return answer;
+        return answer.get();
     }
 
     @Override
@@ -93,10 +84,10 @@ public class BaseServiceImpl implements BaseService {
                 .thenApply(HttpResponse::body)
                 .thenAccept(s -> {
                     try {
-                        JSONObject jsonObject = new JSONObject(s);
-                        JSONObject getSth = jsonObject.getJSONObject("payload");
-                        answer.set(mapper.readValue(getSth.toString(), clazz));
-                    } catch (JSONException | JsonProcessingException e) {
+                        JsonNode jsonNode = mapper.readTree(s);
+                        String getSth = jsonNode.get("payload").toPrettyString();
+                        answer.set(mapper.readValue(getSth.toString(), clazz)); 
+                    } catch (JsonProcessingException e) {
                         e.printStackTrace();
                     }
                 })
@@ -124,10 +115,10 @@ public class BaseServiceImpl implements BaseService {
                 .thenApply(HttpResponse::body)
                 .thenAccept(s -> {
                     try {
-                        JSONObject jsonObject = new JSONObject(s);
-                        JSONObject getSth = jsonObject.getJSONObject("payload");
-                        answer.set(mapper.readValue(getSth.toString(), clazz));
-                    } catch (JSONException | JsonProcessingException e) {
+                        JsonNode jsonNode = mapper.readTree(s);
+                        String getSth = jsonNode.get("payload").toPrettyString();
+                        answer.set(mapper.readValue(getSth.toString(), clazz)); 
+                    } catch (JsonProcessingException e) {
                         e.printStackTrace();
                     }
                 })
@@ -155,10 +146,10 @@ public class BaseServiceImpl implements BaseService {
                 .thenApply(HttpResponse::body)
                 .thenAccept(s -> {
                     try {
-                        JSONObject jsonObject = new JSONObject(s);
-                        JSONObject getSth = jsonObject.getJSONObject("payload");
-                        answer.set(mapper.readValue(getSth.toString(), clazz));
-                    } catch (JSONException | JsonProcessingException e) {
+                        JsonNode jsonNode = mapper.readTree(s);
+                        String getSth = jsonNode.get("payload").toPrettyString();
+                        answer.set(mapper.readValue(getSth.toString(), clazz)); 
+                    } catch (JsonProcessingException e) {
                         e.printStackTrace();
                     }
                 })
