@@ -3,7 +3,6 @@ module FrontEndJavaFx {
     requires javafx.base;
     requires javafx.fxml;
     requires javafx.controls;
-
     requires org.controlsfx.controls;
     requires lombok;
     requires java.desktop;
@@ -19,20 +18,17 @@ module FrontEndJavaFx {
     exports com.youctagh.purchasemanager.frontend.view.category;
     exports com.youctagh.purchasemanager.frontend.view.store;
     exports com.youctagh.purchasemanager.frontend.view.product;
-
+    exports com.youctagh.purchasemanager.frontend.model;
     exports com.youctagh.purchasemanager.frontend.domain;
     exports com.youctagh.purchasemanager.frontend.request;
     exports com.youctagh.purchasemanager.frontend.domain.response;
+    exports com.youctagh.purchasemanager.frontend.controller;
 
     opens com.youctagh.purchasemanager.frontend.application;
-
     opens com.youctagh.purchasemanager.frontend.domain;
-
     opens com.youctagh.purchasemanager.frontend;
-
     opens com.youctagh.purchasemanager.frontend.view.statistics;
     opens com.youctagh.purchasemanager.frontend.view.general;
-
     opens com.youctagh.purchasemanager.frontend.view.ticket;
     opens com.youctagh.purchasemanager.frontend.view.category;
     opens com.youctagh.purchasemanager.frontend.view.store;

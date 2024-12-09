@@ -33,3 +33,6 @@ Test.java
 *.jar
 *.~lock*
 ~$*
+
+FrontEndJavaFx/.gradle/
+FrontEndJavaFx/build
