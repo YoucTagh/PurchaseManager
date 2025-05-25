@@ -47,11 +47,9 @@ public class StatController {
                     createPieChart(newValue);
                 });
 
-        statView.getPieChartFilterByCB().getItems().addAll(PieChartFilter.store
-                , PieChartFilter.category
-                , PieChartFilter.product);
+        statView.getPieChartFilterByCB().getItems().addAll(PieChartFilter.store, PieChartFilter.category,
+                PieChartFilter.product);
         statView.getPieChartFilterByCB().getSelectionModel().select(0);
-
 
         initFilterYearMonthCB();
     }
@@ -73,6 +71,21 @@ public class StatController {
                         .collect(Collectors.toList())
 
         );
+
+        if (!statView.getPieChartFilterCB().getItems().isEmpty()) {
+            statView.getPieChartFilterCB().getSelectionModel().select(0);
+        }
+
+        statView.getPieChartFilterCB().getSelectionModel().selectedItemProperty().addListener(
+                (observableValue, oldValue, newValue) -> {
+                    if (newValue == null) {
+                        statView.getPieChartFilterCB().getSelectionModel().select(oldValue);
+                        return;
+                    }
+                    PieChartFilter currentValue = statView.getPieChartFilterByCB().getSelectionModel().getSelectedItem();
+
+                    createPieChart(currentValue);
+                });
     }
 
     private void initBarCB() {
@@ -87,8 +100,7 @@ public class StatController {
                     createBarChart(newValue);
                 });
 
-        statView.getBarChartFilterByCB().getItems().addAll(BarChartFilter.monthly
-                , BarChartFilter.yearly);
+        statView.getBarChartFilterByCB().getItems().addAll(BarChartFilter.monthly, BarChartFilter.yearly);
         statView.getBarChartFilterByCB().getSelectionModel().select(0);
     }
 
@@ -184,7 +196,8 @@ public class StatController {
 
     private TreeMap<String, Double> getBarChartData(BarChartFilter filter) {
         TreeMap<String, Double> data = new TreeMap<>();
-        final ObservableList<Ticket> items = generalController.getTicketController().getTicketView().getDataTV().getItems();
+        final ObservableList<Ticket> items = generalController.getTicketController().getTicketView().getDataTV()
+                .getItems();
         switch (filter) {
             case monthly:
                 items.forEach(ticket -> {
