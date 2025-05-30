@@ -1,4 +1,4 @@
-# PurchaseManager
+# Purchase Manager
 
 This is a project to manage tickets of bought products from different stores.
 
